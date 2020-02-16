@@ -13,6 +13,10 @@
                 VerticalOptions="CenterAndExpand"
                 HorizontalOptions="Center"
                 Clicked="OnButtonClicked" />
+        <Button x:Name="NavigateButton" Text="NavigateButton"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
+                Clicked="NavigateButtonClicked" />
     </StackLayout>
 
 </ContentPage>

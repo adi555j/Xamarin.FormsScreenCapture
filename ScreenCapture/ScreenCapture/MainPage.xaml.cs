@@ -28,5 +28,10 @@ namespace ScreenCapture
             }
             MessagingCenter.Send<string,string>("OnButtonClicked", "ButtonClickEvent","teue");
         }
+
+        protected async void NavigateButtonClicked(Object sender, EventArgs e)
+        {
+           await Navigation.PushModalAsync(new Page2());
+        }
     }
 }
