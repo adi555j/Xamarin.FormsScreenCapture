@@ -12,6 +12,21 @@ namespace ScreenCapture
         public MainPage()
         {
             InitializeComponent();
+            
+        }
+
+        protected void OnButtonClicked(Object sender,EventArgs e)
+        {
+            
+            if(RecordButton.Text == "Start")
+            {
+                RecordButton.Text = "Stop";
+            }
+            else
+            {
+                RecordButton.Text = "Start";
+            }
+            MessagingCenter.Send<string,string>("OnButtonClicked", "ButtonClickEvent","teue");
         }
     }
 }

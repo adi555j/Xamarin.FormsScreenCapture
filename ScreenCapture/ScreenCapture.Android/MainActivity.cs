@@ -13,6 +13,7 @@ using Android.Hardware.Display;
 using Android.Media;
 using Android;
 using Android.Support.V4.App;
+using Xamarin.Forms;
 
 namespace ScreenCapture.Droid
 {
@@ -45,7 +46,10 @@ namespace ScreenCapture.Droid
         protected override void OnCreate(Bundle savedInstanceState)
         {
             var metrics = new DisplayMetrics();
-
+            MessagingCenter.Subscribe<string,string>("OnButtonClicked", "ButtonClickEvent", (sender, arg) =>
+            {
+                StopRecording(true);
+            });
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
@@ -78,6 +82,7 @@ namespace ScreenCapture.Droid
             SetUpMediaProjection();
             SetUpVirtualDisplay();
         }
+
 
         private void SetUpMediaProjection()
         {
@@ -117,7 +122,7 @@ namespace ScreenCapture.Droid
                 mMediaRecorder.SetOutputFormat(OutputFormat.Webm);
                 //mMediaRecorder.SetVideoEncodingBitRate(512 * 1000);
                 mMediaRecorder.SetVideoEncoder(VideoEncoder.Vp8);
-                mMediaRecorder.SetVideoSize(480, 640);
+                mMediaRecorder.SetVideoSize(1280, 720);
                 //mMediaRecorder.SetVideoFrameRate(10);
                 mMediaRecorder.SetOutputFile(path);
                 mMediaRecorder.Prepare();
@@ -130,5 +135,30 @@ namespace ScreenCapture.Droid
 
         }
 
+        public void StopRecording(bool Flag)
+        {
+            try
+            {
+                mMediaRecorder.Stop();
+
+            }
+            catch(Exception ex)
+            {
+
+            }
+
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            mMediaRecorder.Release();
+            mMediaRecorder.Dispose();
+            mMediaRecorder = null;
+            mediaProjection.Stop();
+            mediaProjection = null;
+            virtualDisplay.Release();
+            virtualDisplay = null;
+        }
     }
 }
